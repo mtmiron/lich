@@ -1,4 +1,6 @@
-# Ruby dependency
+# Compiling it
+
+### Ruby dependency
 
 1) go to http://www.ruby-lang.org and download Ruby's sourcecode.
 2) unpack it someplace and edit the file `./ext/Setup' -- uncomment the line with `socket' on it.
