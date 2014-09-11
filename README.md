@@ -1,4 +1,9 @@
-# Compiling the application
+# Lich
+See http://lichproject.sourceforge.net for the project website.
+
+
+
+## Compiling the application
 
 
 
