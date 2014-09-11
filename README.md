@@ -1,5 +1,5 @@
 # Lich
-See http://lichproject.sourceforge.net for the project website.
+One of my first FOSS projects from SOurceForge.net; see http://lichproject.sourceforge.net for the website.
 
 
 
