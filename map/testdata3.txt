@@ -1,0 +1,19 @@
+[9]
+title = Town Square Central
+area = Wehnimer's Landing
+x = 400
+y=300
+
+[10]
+title=Room 4
+x=200
+y=32
+
+[11]
+adj = 4,go door
+
+[9]
+title = Room 5
+x = 100
+y = 250
+adj = 1,north

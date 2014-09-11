@@ -1,0 +1,20 @@
+[1]
+id = 1 	# this should be ignored
+title = Town Square Central
+area = Wehnimer's Landing
+x = 400
+y=300
+
+[4]
+title=Room 4
+x=200
+y=32
+
+[1]
+adj = 4,go door
+
+[5]
+title = Room 5
+x = 100
+y = 250
+adj = 1,north

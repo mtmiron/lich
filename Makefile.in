@@ -1,0 +1,81 @@
+CC = @CC@
+CFLAGS = -I. @CFLAGS@
+LDFLAGS = -L. -I. -lruby-static -ldl -lcrypt -lm -lz -lglib-2.0 -Wl,-export-dynamic @LDFLAGS@
+
+RBUNDEFS = -UPACKAGE_BUGREPORT -UPACKAGE_NAME -UPACKAGE_STRING -UPACKAGE_TARNAME \
+           -UPACKAGE_VERSION
+
+SOCKETFLAGS = -include rbconf.h -DINET6 -DHAVE_GETADDRINFO -DRUBY_EXPORT \
+              -DHAVE_SOCKADDR_STORAGE -DHAVE_NETINET_TCP_H -DHAVE_NETINET_UDP_H \
+				  -DHAVE_SENDMSG -DHAVE_RECVMSG -DHAVE_ST_MSG_CONTROL -DHAVE_GETNAMEINFO \
+				  -DHAVE_GETADDRINFO -DHAVE_TYPE_SOCKLEN_T -DHAVE_SYS_UN_H -DHAVE_SYS_UIO_H \
+				  -DHAVE_SOCKET -DHAVE_GETHOSTBYNAME2 -DHAVE_SOCKETPAIR -DHAVE_GETHOSTNAME \
+
+ZLIBFLAGS = -include rbconf.h -DRUBY_EXPORT -DHAVE_ZLIB_H  -DOS_CODE=OS_UNIX
+
+PATHFINDFLAGS = -DGUARANTEED_SHORTEST_ALGORITHM
+
+LICHRBFLAGS = 2> /dev/null
+
+LICHXMLFLAGS = `pkg-config --libs glib-2.0` -I/usr/lib/glib-2.0/include -L/usr/lib/glib-2.0 -I/usr/include/glib-2.0 -I/usr/include/glib-2.0/include
+
+PROG = lich
+HDRS = lich.h ruby.h rubyio.h st.h defines.h
+SRCS = lichrb.c lich.c lichparser.c wizardparser.c cachedarray.c versioncmp.c hook.c lichscript.c pathfind.c zlib.c socket.c lichxml.c
+OBJS = $(SRCS:.c=.o)
+
+COMPILE_LICHRB = ruby lich2c.rb
+
+$(PROG) : $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) -o $(PROG) $(LDFLAGS) && strip $(PROG) && sudo chown root:root $(PROG) && sudo chmod 4755 $(PROG)
+
+debug : $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) -g -o $(PROG) $(LDFLAGS) && sudo chown root:root $(PROG) && sudo chmod 4755 $(PROG)
+
+all :
+	make --always-make
+
+lichrb.c : lich2c.rb lich.rb lich-lib.rb libcharsheet.rb \
+	lich-lib.rb libsettings.rb lich-libcritter.rb stringformatting.rb lich-libmap.rb \
+	lich-libmap.rb libhooks.rb gemlib.rb sfparser.rb sfdialog.rb
+	$(COMPILE_LICHRB)
+
+lichrb.o : lichrb.c
+	$(CC) -c -o lichrb.o lichrb.c $(CFLAGS) $(LICHRBFLAGS)
+
+lichxml.o : lichxml.c
+	$(CC) -c -o lichxml.o lichxml.c $(CFLAGS) $(LICHXMLFLAGS)
+
+lichxml.so : lichxml.c
+	$(CC) -shared $(LDFLAGS) $(CFLAGS) $(LICHXMLFLAGS) -o lichxml.so lichxml.c
+
+wizardparser.o : wizardparser.c
+
+cachedarray.o : cachedarray.c
+
+versioncmp.o : versioncmp.c
+
+hook.o : hook.c
+
+lichscript.o : lichscript.c
+
+pathfind.o : pathfind.c
+	$(CC) -c -o pathfind.o pathfind.c $(CFLAGS) $(PATHFINDFLAGS)
+
+zlib.o : zlib.c
+	$(CC) -c -o zlib.o zlib.c $(CFLAGS) $(ZLIBFLAGS)
+
+socket.o : socket.c getaddrinfo.c getnameinfo.c
+	$(CC) -c -o socket.o socket.c $(CFLAGS) $(SOCKETFLAGS)
+
+getaddrinfo.o : getaddrinfo.c
+	$(CC) -c -o getaddrinfo.o getaddrinfo.c $(CFLAGS) $(SOCKETFLAGS)
+
+getnameinfo.o : getnameinfo.c
+	$(CC) -c -o getaddrinfo.o getaddrinfo.c $(CFLAGS) $(SOCKETFLAGS)
+
+clean :
+	rm -vf $(OBJS) lichrb.c
+
+distclean :
+	rm -vf $(PROG) $(OBJS) lichxml.so lichrb.c config.h config.log config.status

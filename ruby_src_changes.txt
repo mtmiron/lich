@@ -1,0 +1,1 @@
+  ruby-1.8.5: eval.c: 13066: make static rb_thread_critical_set() non-static

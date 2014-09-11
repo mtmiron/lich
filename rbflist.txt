@@ -1,0 +1,12 @@
+sfdialog.rb
+sfparser.rb
+gemlib.rb
+libhooks.rb
+libcharsheet.rb
+lich-lib.rb
+libsettings.rb
+lich-libcritter.rb
+stringformatting.rb
+lich-libmap.rb
+lich-libmatch.rb
+lich.rb
