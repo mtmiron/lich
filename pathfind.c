@@ -45,6 +45,9 @@
  *  estimation of any kind and is less efficient, but is guaranteed
  *  to find the shortest possible route.
  *
+ *  (2019-05-08: note that the A*Star algorithm mentioned above is broken
+ *     because I screwed up by overestimating the cost of some paths).
+ *
  *  You'll probably want to use the Map class from "lich-libmap.rb,"
  *  but it isn't necessary: use it only as an example for your own
  *  implementation if desired.
