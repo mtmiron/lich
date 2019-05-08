@@ -1,8 +1,6 @@
 # Lich
 This is the first project I released publicly; started on it in 2005, and it was taken over by Tillmen in 2008 when my schoolwork became something I had to start paying actual attention to.  Had a couple hundred daily users at the time, which I still find pretty gratifying.
 
-The coded-in-vim site is still up at [https://lichproject.sf.net](https://lichproject.sf.net)
-
 
 
 ## Compiling the application
